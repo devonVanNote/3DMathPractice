@@ -16,7 +16,7 @@ public class AttributeManager : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        switch(other.gameObject.tag)
+        switch (other.gameObject.tag)
         {
             case Tag.Magic:
                 attributes |= MAGIC;
@@ -27,11 +27,20 @@ public class AttributeManager : MonoBehaviour
             case Tag.Charisma:
                 attributes |= CHARISMA;
                 break;
-           case Tag.Fly:
+            case Tag.Fly:
                 attributes |= FLY;
                 break;
             case Tag.Invisible:
                 attributes |= INVISIBLE;
+                break;
+            case Tag.AddMultiple:
+                attributes |= (INTELLIGENCE | MAGIC | CHARISMA);
+                break;
+            case Tag.RemoveMultiple:
+                attributes &= ~(INTELLIGENCE | MAGIC);
+                break;
+            case Tag.RemoveAll:
+                attributes = 0;
                 break;
             default:
                 break;
@@ -42,15 +51,15 @@ public class AttributeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
         Vector3 screenPoint = Camera.main.WorldToScreenPoint(this.transform.position);
-        attributeDisplay.transform.position = screenPoint + new Vector3(0,-50,0);
+        attributeDisplay.transform.position = screenPoint + new Vector3(0, -50, 0);
         attributeDisplay.text = Convert.ToString(attributes, 2).PadLeft(8, '0');
     }
-       
+
 }
