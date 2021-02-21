@@ -12,35 +12,45 @@ public class AttributeManager : MonoBehaviour
     static public int INVISIBLE = 1;
 
     public Text attributeDisplay;
-    int attributes = 0;
+    public int attributes = 0;
 
     void OnTriggerEnter(Collider other)
     {
         switch (other.gameObject.tag)
         {
             case Tag.Magic:
+            case Tag.MagicKey:
                 attributes |= MAGIC;
+                Destroy(other.gameObject);
                 break;
             case Tag.Intelligence:
                 attributes |= INTELLIGENCE;
                 break;
             case Tag.Charisma:
+            case Tag.CharismaKey:
                 attributes |= CHARISMA;
+                Destroy(other.gameObject);
                 break;
             case Tag.Fly:
                 attributes |= FLY;
                 break;
             case Tag.Invisible:
+            case Tag.InvisibleKey:
                 attributes |= INVISIBLE;
+                Destroy(other.gameObject);
                 break;
-            case Tag.AddMultiple:
+            case Tag.Add:
                 attributes |= (INTELLIGENCE | MAGIC | CHARISMA);
                 break;
-            case Tag.RemoveMultiple:
+            case Tag.Remove:
                 attributes &= ~(INTELLIGENCE | MAGIC);
                 break;
-            case Tag.RemoveAll:
+            case Tag.Reset:
                 attributes = 0;
+                break;
+            case Tag.GoldenKey:
+                attributes |= (MAGIC | INVISIBLE | CHARISMA);
+                Destroy(other.gameObject);
                 break;
             default:
                 break;
