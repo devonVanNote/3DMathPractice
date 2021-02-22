@@ -20,23 +20,23 @@ public class AttributeManager : MonoBehaviour
         {
             case Tag.Magic:
             case Tag.MagicKey:
-                attributes |= MAGIC;
+                attributes ^= MAGIC;
                 Destroy(other.gameObject);
                 break;
             case Tag.Intelligence:
-                attributes |= INTELLIGENCE;
+                attributes ^= INTELLIGENCE;
                 break;
             case Tag.Charisma:
             case Tag.CharismaKey:
-                attributes |= CHARISMA;
+                attributes ^= CHARISMA;
                 Destroy(other.gameObject);
                 break;
             case Tag.Fly:
-                attributes |= FLY;
+                attributes ^= FLY;
                 break;
             case Tag.Invisible:
             case Tag.InvisibleKey:
-                attributes |= INVISIBLE;
+                attributes ^= INVISIBLE;
                 Destroy(other.gameObject);
                 break;
             case Tag.Add:
