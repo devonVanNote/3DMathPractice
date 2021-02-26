@@ -15,4 +15,11 @@ public class Tag
     public const string MagicKey = "MAGIC_KEY";
     public const string InvisibleKey = "INVISIBLE_KEY";
     public const string CharismaKey = "CHARISMA_KEY";
+    public const string Dirt = "Dirt";
+    public const string Desert = "Desert";
+    public const string Grain = "Grain";
+    public const string Pasture = "Pasture";
+    public const string Rock = "Rock";
+    public const string Water = "Water";
+    public const string Woods = "Woods";
 }
