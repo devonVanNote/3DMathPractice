@@ -22,6 +22,7 @@ public class Line
         A = _A;
         B = _A + v;
         V = v;
+        type = LineType.Segment;
     }
 
     //t is sometimes referred to as time
@@ -55,5 +56,23 @@ public class Line
     public void Draw(float width, Color color)
     {
         Coords.DrawLine(A, B, width, color);
+    }
+
+    public float IntersectsAt(Line line)
+    {
+        if(HolisticMath.Dot(Coords.Perp(line.V), V) == 0)
+        {
+            return float.NaN; // lines are parallel!
+        }
+
+        Coords c = line.A - this.A;
+        float t = HolisticMath.Dot(Coords.Perp(line.V), c) / HolisticMath.Dot(Coords.Perp(line.V), V);
+        
+        if((t < 0 || t > 1) && type == LineType.Segment)
+        {
+            return float.NaN;
+        }
+        
+        return t;
     }
 }
