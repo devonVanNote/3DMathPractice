@@ -17,7 +17,7 @@ public class CreateLines : MonoBehaviour
         float intersectT = L1.IntersectsAt(L2);
         float intersectS = L2.IntersectsAt(L1);
         
-        if(intersectT == intersectT && intersectS == intersectS) 
+        if(L1.IntersectIsANumber(intersectT) && L2.IntersectIsANumber(intersectS)) 
         {
             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             sphere.transform.position = L1.Lerp(intersectT).ToVector();

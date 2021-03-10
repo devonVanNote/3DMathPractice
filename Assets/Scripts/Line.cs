@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Line
 {
-    Coords A;
-    Coords B;
-    Coords V;
+    public  Coords A;
+    public Coords B;
+    public Coords V;
     string type;
 
     public Line(Coords _A, Coords _B, string _type)
@@ -58,15 +58,15 @@ public class Line
         Coords.DrawLine(A, B, width, color);
     }
 
-    public float IntersectsAt(Line line)
+    public float IntersectsAt(Line L2)
     {
-        if(HolisticMath.Dot(Coords.Perp(line.V), V) == 0)
+        if(HolisticMath.Dot(Coords.Perp(L2.V), V) == 0)
         {
             return float.NaN; // lines are parallel!
         }
 
-        Coords c = line.A - this.A;
-        float t = HolisticMath.Dot(Coords.Perp(line.V), c) / HolisticMath.Dot(Coords.Perp(line.V), V);
+        Coords c = L2.A - this.A;
+        float t = HolisticMath.Dot(Coords.Perp(L2.V), c) / HolisticMath.Dot(Coords.Perp(L2.V), V);
         
         if((t < 0 || t > 1) && type == LineType.Segment)
         {
@@ -74,5 +74,42 @@ public class Line
         }
         
         return t;
+    }
+
+    public bool IntersectIsANumber(float t_or_s)
+    {
+        return t_or_s == t_or_s;
+    }
+
+    public float IntersectsAt(Plane plane)
+    {
+        Coords normal = HolisticMath.CrossProduct(plane.u, plane.v);
+
+        if(HolisticMath.Dot(normal, V) == 0)
+        {
+            return float.NaN;
+        }
+
+        float t = HolisticMath.Dot(normal, plane.A-A) / HolisticMath.Dot(normal, V);
+
+        return t;
+    }
+
+    public Coords Reflect(Coords normal)
+    {
+        Coords norm = normal.GetNormal();
+        Coords vNorm = V.GetNormal();
+
+        float d = HolisticMath.Dot(norm, vNorm);
+
+        if (d == 0) //d will be zero if tryng to reflect against parallel line or wall therefore won't reflect
+        {
+            return V;
+        }
+
+        float vn2 =  d * 2;
+        Coords reflectionVector = vNorm - norm * vn2; 
+
+        return reflectionVector;
     }
 }

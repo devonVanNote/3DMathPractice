@@ -29,6 +29,12 @@ public class Coords
         z = vecpos.z;
     }
 
+    public Coords GetNormal()
+    {
+        float magnitude = HolisticMath.Distance(new Coords(0,0,0), new Coords(x,y,z));
+        return new Coords(x / magnitude, y / magnitude, z / magnitude);
+    }
+
     public override string ToString()
     {
         return "(" + x + "," + y + "," + z + ")";
@@ -75,13 +81,25 @@ public class Coords
         lineRenderer.endWidth = width;
     }
 
-    static public Coords operator+ (Coords a, Coords b)
+    static public Coords operator + (Coords a, Coords b)
     {
         Coords sum = new Coords(a.x + b.x, a.y + b.y, a.z + b.z);
         return sum;
     }
 
-    static public Coords operator- (Coords a, Coords b)
+    static public Coords operator * (Coords a, float b)
+    {
+        Coords product = new Coords(a.x  * b, a.y * b, a.z * b);
+        return product;
+    }
+
+    static public Coords operator / (Coords a, float b)
+    {
+        Coords quotient = new Coords(a.x / b, a.y / b, a.z / b);
+        return quotient;
+    }
+
+    static public Coords operator - (Coords a, Coords b)
     {
         Coords difference = new Coords(a.x - b.x, a.y - b.y, a.z - b.z);
         return difference;
@@ -89,6 +107,6 @@ public class Coords
 
     static public Coords Perp(Coords v)
     {
-        return new Coords(-v.y, v.x);
+        return new Coords(-v.y, v.x, 0); //z value is zero for 2D only!
     }
 }
