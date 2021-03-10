@@ -1,13 +1,14 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using UnityEngine.UI;
 using System;
 
 public class AttributeManager : MonoBehaviour
 {
-    static public int MAGIC = 16;
-    static public int INTELLIGENCE = 8;
-    static public int CHARISMA = 4;
-    static public int FLY = 2;
+    static public int MAGIC = 1 << 5;
+    static public int INTELLIGENCE = 1 << 4;
+    static public int CHARISMA = 1 << 3;
+    static public int FLY = 1 << 2;
     static public int INVISIBLE = 1;
 
     public Text attributeDisplay;
@@ -19,23 +20,23 @@ public class AttributeManager : MonoBehaviour
         {
             case Tag.Magic:
             case Tag.MagicKey:
-                attributes ^= MAGIC;
+                attributes |= MAGIC;
                 Destroy(other.gameObject);
                 break;
             case Tag.Intelligence:
-                attributes ^= INTELLIGENCE;
+                attributes |= INTELLIGENCE;
                 break;
             case Tag.Charisma:
             case Tag.CharismaKey:
-                attributes ^= CHARISMA;
+                attributes |= CHARISMA;
                 Destroy(other.gameObject);
                 break;
             case Tag.Fly:
-                attributes ^= FLY;
+                attributes |= FLY;
                 break;
             case Tag.Invisible:
             case Tag.InvisibleKey:
-                attributes ^= INVISIBLE;
+                attributes |= INVISIBLE;
                 Destroy(other.gameObject);
                 break;
             case Tag.Add:
