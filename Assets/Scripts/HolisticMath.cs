@@ -109,6 +109,34 @@ public class HolisticMath
         return new Coords(xValue, yValue, zValue);
     }
 
+    static public Coords Translate(Coords position, Coords vector)
+    {
+        float[] translateValues = {1, 0, 0, vector.x,
+                                                0, 1, 0, vector.y,
+                                                0, 0, 1, vector.z,
+                                                0, 0, 0,            1 };
+
+        Matrix translateMatrix = new Matrix(4, 4, translateValues);
+        Matrix pos = new Matrix(4, 1, position.AsFloats());
+        Matrix result = translateMatrix * pos;
+
+        return result.AsCoords();
+    }
+
+    static public Coords Scale(Coords position, float scaleX, float scaleY, float scaleZ)
+    {
+        float[] scaleValues = {scaleX, 0, 0, 0,
+                                         0, scaleY,   0, 0,
+                                         0, 0, scaleZ,   0,
+                                         0, 0, 0,           1 };
+
+        Matrix scaleMatrix = new Matrix(4, 4, scaleValues);
+        Matrix pos = new Matrix(4, 1, position.AsFloats());
+        Matrix result = scaleMatrix * pos;
+
+        return result.AsCoords();
+    }
+
     static public Coords Lerp(Coords A, Coords B, float t)
     {
         Coords V = new Coords(B.x - A.x, B.y - A.y, B.z - A.z);
