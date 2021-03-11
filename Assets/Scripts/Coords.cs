@@ -8,6 +8,8 @@ public class Coords
     public float y;
     public float z;
 
+    public float w;
+
     public Coords(float _X, float _Y)
     {
         x = _X;
@@ -20,6 +22,28 @@ public class Coords
         x = _X;
         y = _Y;
         z = _Z;
+    }
+
+     public Coords(float _X, float _Y, float _Z, float _W)
+    {
+        x = _X;
+        y = _Y;
+        z = _Z;
+        w = _W;
+    }
+
+    public Coords(Vector3  vectorPostion, float _W)
+    {
+        x = vectorPostion.x;
+        y = vectorPostion.y;
+        z = vectorPostion.z;
+        w = _W;
+    }
+
+    public float[] AsFloats()
+    {
+        float[] values = {x , y, x, w};
+        return values;
     }
 
     public Coords(Vector3 vecpos)
