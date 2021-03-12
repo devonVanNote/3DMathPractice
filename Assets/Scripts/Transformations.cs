@@ -8,6 +8,7 @@ public class Transformations : MonoBehaviour
     public Vector3 angle;
     public Vector3 translation;
     public Vector3 scale;
+    public Vector3 shear;
     public GameObject center;
     // Start is called before the first frame update
     void Start()
@@ -21,23 +22,34 @@ public class Transformations : MonoBehaviour
         foreach( GameObject p in points)
         {
             Coords position = new Coords(p.transform.position, 1);
-            Rotation r = new Rotation() 
-            {
-                angleX = angle.x,
-                angleY = angle.y,
-                angleZ = angle.z,
-                clockwiseX = true,
-                clockwiseY = true,
-                clockwiseZ = true
-            };
-
-            Coords translationBackCoords = new Coords(new Vector3(c.x, c.y, c.z), 0);
-            Coords translationToOriginCoords = new Coords(new Vector3(-c.x, -c.y, -c.z), 0);
-            position = HolisticMath.Translate(position, translationToOriginCoords);
-            position = HolisticMath.Rotate(position, r);
-            
-            p.transform.position = HolisticMath.Translate(position, translationBackCoords).ToVector();            
+            p.transform.position = HolisticMath.Shear(position, shear.x, shear.y, shear.z).ToVector();            
         }
+
+        DrawWireFrame();
+    }
+
+    void DrawWireFrame()
+    {
+        Coords.DrawLine(new Coords(points[0].transform.position), new Coords(points[1].transform.position), 0.05f, Color.yellow);
+        Coords.DrawLine(new Coords(points[1].transform.position), new Coords(points[2].transform.position), 0.05f, Color.yellow);
+        Coords.DrawLine(new Coords(points[2].transform.position), new Coords(points[3].transform.position), 0.05f, Color.yellow);
+        Coords.DrawLine(new Coords(points[3].transform.position), new Coords(points[0].transform.position), 0.05f, Color.yellow);
+        
+        Coords.DrawLine(new Coords(points[4].transform.position), new Coords(points[5].transform.position), 0.05f, Color.yellow);
+        Coords.DrawLine(new Coords(points[5].transform.position), new Coords(points[6].transform.position), 0.05f, Color.yellow);
+        Coords.DrawLine(new Coords(points[6].transform.position), new Coords(points[7].transform.position), 0.05f, Color.yellow);
+        Coords.DrawLine(new Coords(points[7].transform.position), new Coords(points[4].transform.position), 0.05f, Color.yellow);
+        
+        Coords.DrawLine(new Coords(points[2].transform.position), new Coords(points[6].transform.position), 0.05f, Color.yellow);
+        Coords.DrawLine(new Coords(points[7].transform.position), new Coords(points[3].transform.position), 0.05f, Color.yellow);
+        Coords.DrawLine(new Coords(points[5].transform.position), new Coords(points[1].transform.position), 0.05f, Color.yellow);
+        Coords.DrawLine(new Coords(points[4].transform.position), new Coords(points[0].transform.position), 0.05f, Color.yellow);
+        
+        Coords.DrawLine(new Coords(points[8].transform.position), new Coords(points[9].transform.position), 0.05f, Color.yellow);
+        Coords.DrawLine(new Coords(points[9].transform.position), new Coords(points[4].transform.position), 0.05f, Color.yellow);
+        Coords.DrawLine(new Coords(points[9].transform.position), new Coords(points[5].transform.position), 0.05f, Color.yellow);
+        Coords.DrawLine(new Coords(points[8].transform.position), new Coords(points[6].transform.position), 0.05f, Color.yellow);
+        Coords.DrawLine(new Coords(points[8].transform.position), new Coords(points[7].transform.position), 0.05f, Color.yellow);
     }
 
     // Update is called once per frame

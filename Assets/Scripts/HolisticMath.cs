@@ -165,6 +165,32 @@ public class HolisticMath
         return rotation.AsCoords();
     }
 
+    static public Coords Shear(Coords position, float x, float y, float z)
+    {
+        float[] shearValues =  {1, x, z, 0,
+                                            x, 1, z, 0,
+                                            x, y, 1, 0,
+                                            0, 0, 0, 1};
+        Matrix shearMatrix = new Matrix(4 ,4, shearValues);
+        Matrix pos = new Matrix(4, 1, position.AsFloats());
+        Matrix shear = shearMatrix * pos;
+
+        return shear.AsCoords();
+    }
+
+    static public Coords Reflect(Coords position)
+    {
+        float[] reflectValues = {-1,0,0,0,
+                                             0, 1, 0, 0,
+                                             0, 0, 1, 0,
+                                             0, 0, 0, 1 };
+        Matrix reflectMatrix = new Matrix(4, 4, reflectValues);
+        Matrix pos = new Matrix(4, 1, position.AsFloats());
+
+        Matrix reflection = reflectMatrix * pos;
+        return reflection.AsCoords();
+    }
+
     static public Rotation CheckForClockwise(Rotation r)
     {
          if(r.clockwiseX)

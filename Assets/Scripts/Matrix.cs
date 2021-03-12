@@ -79,25 +79,24 @@ public class Matrix
 
     static public Matrix operator * (Matrix a, Matrix b)
     {
-        if(a.columns != b.rows)
+        if (a.columns != b.rows)
         {
             return null;
         }
 
-        
-        float[] productValues = new float[a.rows * b.columns];
-
-        for (int i = 0; i < a.rows; i++) 
+        float[] resultValues = new float[a.rows * b.columns];
+        for(int i = 0; i < a.rows; i++)
         {
             for(int j = 0; j < b.columns; j++)
             {
-                for (int k = 0; k < a.columns; k++)
+                for(int k = 0; k < a.columns; k++)
                 {
-                    productValues[i * b.columns + j] += a.values[i * a.columns + k] * b.values[k * b.columns + j];
+                    resultValues[i * b.columns + j] += a.values[i * a.columns + k] *
+                                                    b.values[k * b.columns + j];
                 }
             }
         }
 
-        return new Matrix(a.rows, b.columns, productValues);
+        return new Matrix(a.rows, b.columns, resultValues);
     }
 }
