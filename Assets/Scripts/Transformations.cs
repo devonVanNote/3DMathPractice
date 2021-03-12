@@ -5,7 +5,7 @@ using UnityEngine;
 public class Transformations : MonoBehaviour
 {
     public GameObject[] points;
-    public float angle;
+    public Vector3 angle;
     public Vector3 translation;
     public Vector3 scale;
     public GameObject center;
@@ -16,16 +16,27 @@ public class Transformations : MonoBehaviour
                                                center.transform.position.y,
                                                center.transform.position.z );
 
+        angle = angle * Mathf.Deg2Rad;
+
         foreach( GameObject p in points)
         {
             Coords position = new Coords(p.transform.position, 1);
-            Coords translationToOriginCoords = new Coords(new Vector3(-c.x, -c.y, -c.z), 0);
-            Coords translationBackCoords = new Coords(new Vector3(c.x, c.y, c.z), 0);
+            Rotation r = new Rotation() 
+            {
+                angleX = angle.x,
+                angleY = angle.y,
+                angleZ = angle.z,
+                clockwiseX = true,
+                clockwiseY = true,
+                clockwiseZ = true
+            };
 
+            Coords translationBackCoords = new Coords(new Vector3(c.x, c.y, c.z), 0);
+            Coords translationToOriginCoords = new Coords(new Vector3(-c.x, -c.y, -c.z), 0);
             position = HolisticMath.Translate(position, translationToOriginCoords);
-            position = HolisticMath.Scale(position, scale.x, scale.y , scale.z);
-            p.transform.position = HolisticMath.Translate(position, translationBackCoords).ToVector();
+            position = HolisticMath.Rotate(position, r);
             
+            p.transform.position = HolisticMath.Translate(position, translationBackCoords).ToVector();            
         }
     }
 
